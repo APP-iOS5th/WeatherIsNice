@@ -23,6 +23,9 @@ public class WeatherViewModel: ObservableObject {
     @Published var weatherDescription: String = "--"
     @Published var weatherIcon: String = defualutIcon
     
+    @Published var forecastDataList: [ForecastAPIResponse] = []
+    
+    
     public let weatherService: WeatherService
     
     public init(weatherService: WeatherService) {
@@ -36,6 +39,13 @@ public class WeatherViewModel: ObservableObject {
                 self.temperature = "\(weather.temperature)ºC"
                 self.weatherDescription = weather.description.capitalized
                 self.weatherIcon = iconMap[weather.iconName] ?? defualutIcon
+                
+            }
+        }
+        weatherService.loadForecastWeatherData{ weather in
+            DispatchQueue.main.async {
+                
+                
             }
         }
     }

@@ -50,7 +50,7 @@ extension WeatherData.WeatherImoge {
 
 
 
-struct FiveDaysTemp: View {
+struct FiveDaysTempView: View {
     var sampleDatas = WeatherData.sampleData
     
     var body: some View {
@@ -82,5 +82,5 @@ struct FiveDaysTemp: View {
 }
 
 #Preview {
-    FiveDaysTemp()
+    FiveDaysTempView()
 }

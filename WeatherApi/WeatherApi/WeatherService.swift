@@ -14,6 +14,8 @@ public final class WeatherService: NSObject {
     private let locationManager = CLLocationManager()
     private let API_KEY = "ce878d5130eaace7c56141ff9190f16f"
     private var completionHandler: ((Weather) -> Void)?
+    private var forecastcompletionHandler: ((ForecastWeather) -> Void)?
+    private var ForecastDatalist: [String] = []
     
     public override init() {
         super.init()
@@ -24,6 +26,11 @@ public final class WeatherService: NSObject {
     
     public func loadWeatherData(_ completionHandler: @escaping((Weather) -> Void)) {
         self.completionHandler = completionHandler
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    public func loadForecastWeatherData(_ completionHandler: @escaping((ForecastWeather) -> Void)) {
+        self.forecastcompletionHandler = completionHandler
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
@@ -43,6 +50,30 @@ public final class WeatherService: NSObject {
             }
         }.resume()
     }
+    
+    // forcast API
+    private func makeForecastDataRequest(forCoordinates coordinates: CLLocationCoordinate2D) {
+        
+        
+        guard let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(API_KEY)&units=metric"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            print("error")
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {return}
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil, let data = data else {return}
+            if let response = try? JSONDecoder().decode(ForecastAPIResponse.self, from: data) {
+                self.forecastcompletionHandler?(ForecastWeather(response: response))
+            }
+            
+        }.resume()
+        
+    }
+
+    
 }
 
 extension WeatherService: CLLocationManagerDelegate {
@@ -52,6 +83,7 @@ extension WeatherService: CLLocationManagerDelegate {
     ) {
         guard let location = locations.first else { return}
         makeDataRequest(forCoordinates: location.coordinate)
+        makeForecastDataRequest(forCoordinates: location.coordinate)
     }
     
     public func locationManager(
@@ -74,6 +106,41 @@ struct APIMain: Decodable {
 }
 
 struct APIWeather: Decodable {
+    let description: String
+    let iconName: String
+    
+    enum CodingKeys: String, CodingKey{
+        case description
+        case iconName = "main"
+    }
+}
+
+
+
+// forcast
+
+// MARK: - WeatherData
+//struct ForecastWeatherData: Decodable {
+//    let list: [ForecastAPIWeather]
+//}
+
+// MARK: - List
+struct ForecastAPIResponse: Decodable {
+    let dt: Int
+    let Forecastmain: ForecastAPIMain
+    let ForecastWeather: [ForecastAPIWeather]
+    let dt_txt: String? //날짜
+}
+
+// MARK: - MainClass
+struct ForecastAPIMain: Decodable {
+    let temp: Double
+    let temp_min, temp_max: Double?
+}
+
+
+// MARK: - Weather
+struct ForecastAPIWeather: Decodable {
     let description: String
     let iconName: String
     
