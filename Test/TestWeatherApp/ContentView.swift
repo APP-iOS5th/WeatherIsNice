@@ -22,6 +22,7 @@ struct ContentView: View {
                     Button {
                         forecastListVM.getWeatherForecast()
                         currentListVM.getWeatherCurrent()
+                        print(forecastListVM.forecasts)
                         
                     } label: {
                         Image(systemName: "magnifyingglass.circle.fill")
@@ -35,23 +36,16 @@ struct ContentView: View {
                     WebImage(url: currentListVM.current?.weatherIconURL ?? nil)
                     Text(currentListVM.current?.overview ?? "")
                 }
-                List(forecastListVM.forecasts, id: \.day) { day in
-                        VStack(alignment: .leading) {
-                            Text(day.day)
-                                .fontWeight(.bold)
-                            HStack(alignment: .top){
-                                WebImage(url: day.weatherIconURL)
-                                VStack(alignment: .leading){
-                                    Text(day.overview)
-                                    HStack{
-                                        Text(day.high)
-                                        Text(day.low)
-                                    }
-                                }
-                            }
-                        }
+                List(forecastListVM.temperatureInfoPerDay, id: \.date) { temperatureInfo in
+                    VStack(alignment: .leading) {
+                        Text(temperatureInfo.date)
+                            .font(.headline)
+                        Text("Min Temp: \(String(format: "%.0f", temperatureInfo.minTemp))°C")
+                        Text("Max Temp: \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
                     }
-                    .listStyle(PlainListStyle())
+                }
+                
+                .listStyle(PlainListStyle())
                 
             }
             .padding(.horizontal)

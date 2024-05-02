@@ -24,6 +24,7 @@ struct Forecast: Codable {
             let icon: String
         }
         let weather: [Weather]
+        let dt_txt: String
     }
     let list: [List]
 }

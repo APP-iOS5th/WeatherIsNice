@@ -63,9 +63,9 @@
 			children = (
 				184357A02BE0CA1500C0D3E3 /* TestWeatherAppApp.swift */,
 				184357A22BE0CA1500C0D3E3 /* ContentView.swift */,
-				18047D952BE21A8B00BD3D77 /* ForecastStruct.swift */,
 				18047D9E2BE3200800BD3D77 /* ForecastListViewModel.swift */,
 				18047DA02BE321A000BD3D77 /* ForecastViewModel.swift */,
+				18047D952BE21A8B00BD3D77 /* ForecastStruct.swift */,
 				18047D972BE2202100BD3D77 /* APIService.swift */,
 				184357A42BE0CA1600C0D3E3 /* Assets.xcassets */,
 				184357A62BE0CA1600C0D3E3 /* Preview Content */,

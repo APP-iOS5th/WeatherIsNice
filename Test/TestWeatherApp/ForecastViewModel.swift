@@ -16,6 +16,13 @@ struct ForecastViewModel {
         return dateFormatter
     }
     
+    private static var shortdateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM. dd : E"
+        return dateFormatter
+    }
+    
+    
     private static var numberFormatter: NumberFormatter {
         let numberFormatter = NumberFormatter()
         numberFormatter.maximumFractionDigits = 0 // 최대 소수자리
@@ -25,6 +32,12 @@ struct ForecastViewModel {
     var day: String {
         return Self.dateFormatter.string(from: forecast.dt)
     }
+    
+    var shortday: String {
+        return Self.shortdateFormatter.string(from: forecast.dt)
+    }
+    
+    
     
     var overview: String {
         forecast.weather[0].description.capitalized
@@ -38,10 +51,16 @@ struct ForecastViewModel {
         return "L: \(Self.numberFormatter.string(for: forecast.main.temp_min) ?? "0")ºC"
     }
     
+    var lowToInt: Double {
+        forecast.main.temp_min
+    }
+    
     var weatherIconURL: URL {
         let urlString = "https://openweathermap.org/img/wn/\(forecast.weather[0].icon)@2x.png"
         return URL(string: urlString)!
     }
+    
+    
     
 }
 
