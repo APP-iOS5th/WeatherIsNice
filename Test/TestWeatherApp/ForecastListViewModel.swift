@@ -12,7 +12,28 @@ struct TemperatureInfo {
     let date: String
     let minTemp: Double
     let maxTemp: Double
+    let iconCode: String
 }
+
+public final class LocationService: NSObject {
+    private let locationManager = CLLocationManager()
+    var currentLat: Double = 0
+    var currentLon: Double = 0
+    
+    public func loadLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            guard let location = locations.last else { return }
+            currentLat = location.coordinate.latitude
+            currentLon = location.coordinate.longitude
+        }
+    
+    
+}
+
 
 
 class ForecastListViewModel: ObservableObject {
@@ -25,17 +46,17 @@ class ForecastListViewModel: ObservableObject {
     func getWeatherForecast() {
         let apiService = ForecastAPIService.shared
         
-        CLGeocoder().geocodeAddressString(location) {(placemarks, error) in
+        CLGeocoder().geocodeAddressString(location) {(placemarks, error) in    // CLGeocoder() : 지정된 위치의 위도 및 경도
             if let error = error {
                 print(error.localizedDescription)
             }
             if let lat = placemarks?.first?.location?.coordinate.latitude,
-               let lon = placemarks?.first?.location?.coordinate.longitude {
+               let lon = placemarks?.first?.location?.coordinate.longitude {  // getJSON : 비동기적으로 데이터를 가져온다.
                 apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) {
                     (result: Result<Forecast,ForecastAPIService.APIError>) in
                     switch result {
                     case .success(let forecast):
-                        DispatchQueue.main.async { [self] in
+                        DispatchQueue.main.async { [self] in                // 주어진 클로저를 메인 스레드에서 비동기적으로 실행 하겠다. -> 데이터를 받아오면 UI 업데이트를 수행하겠다.
                             self.forecasts = forecast.list.map {ForecastViewModel(forecast: $0)}
                             self.temperatureInfoPerDay = self.calculateTemperatureInfoPerDay(from: forecasts)
                         }// @State
@@ -56,15 +77,34 @@ class ForecastListViewModel: ObservableObject {
         var temperatureInfoPerDay: [TemperatureInfo] = []
         var tempInfoDict: [String: TemperatureInfo] = [:]
         
+        var iconCodeCountDict: [String: [String: Int]] = [:]
         for forecast in forecasts {
-            let date = String(forecast.shortday)
+            let date = forecast.shortday
+            if iconCodeCountDict[date] == nil {
+                iconCodeCountDict[date] = [:]  // 요일 별 배열 초기화
+            }
+            if let count = iconCodeCountDict[date]?[forecast.iconCode] {
+                iconCodeCountDict[date]?[forecast.iconCode] = count + 1  // 이중 for 문 ;;
+            } else {
+                iconCodeCountDict[date]?[forecast.iconCode] = 1
+            }
+        }
+        
+        
+        for forecast in forecasts {
+            let date = forecast.shortday
             if let existingTempInfo = tempInfoDict[date] {
                 let minTemp = min(existingTempInfo.minTemp, forecast.forecast.main.temp_min)
                 let maxTemp = max(existingTempInfo.maxTemp, forecast.forecast.main.temp_max)
-                let updatedTempInfo = TemperatureInfo(date: date, minTemp: minTemp, maxTemp: maxTemp)
+                
+                // 가장 많이 등장한 아이콘 찾기 (없으면 첫번째 데이터)
+                let mostFrequentIconCode = iconCodeCountDict[date]?.max { $0.value < $1.value }?.key ?? forecasts[0].iconCode
+                
+                let updatedTempInfo = TemperatureInfo(date: date, minTemp: minTemp, maxTemp: maxTemp, iconCode: mostFrequentIconCode)
                 tempInfoDict[date] = updatedTempInfo
             } else {
-                let tempInfo = TemperatureInfo(date: date, minTemp: forecast.forecast.main.temp_min, maxTemp: forecast.forecast.main.temp_max)
+                let mostFrequentIconCode = iconCodeCountDict[date]?.max { $0.value < $1.value }?.key ?? forecasts[0].iconCode
+                let tempInfo = TemperatureInfo(date: date, minTemp: forecast.forecast.main.temp_min, maxTemp: forecast.forecast.main.temp_max, iconCode: mostFrequentIconCode)
                 tempInfoDict[date] = tempInfo
             }
         }

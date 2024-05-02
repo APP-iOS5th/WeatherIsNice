@@ -72,6 +72,10 @@ struct ForecastViewModel {
         return URL(string: urlString)!
     }
     
+    var iconCode: String {
+        forecast.weather[0].icon
+    }
+    
     
     
 }

@@ -20,8 +20,6 @@ struct ContentView: View {
                     Button {
                         forecastListVM.getWeatherForecast()
                         currentListVM.getWeatherCurrent()
-                        print(forecastListVM.forecasts)
-                        
                     } label: {
                         Image(systemName: "magnifyingglass.circle.fill")
                             .font(.title3)
@@ -90,12 +88,11 @@ struct ContentView: View {
                                 VStack(alignment: .leading) {
                                     Text(temperatureInfo.date)
                                         .font(.headline)
-                                    Text("Min Temp: \(String(format: "%.0f", temperatureInfo.minTemp))°C")
-                                    Text("Max Temp: \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
+                                    Text("최저 : \(String(format: "%.0f", temperatureInfo.minTemp))°C")
+                                    Text("최고 : \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
                                 }
                                 Spacer()
-                                Image(systemName: "cloud.fill")
-                                    .padding()
+                                Text(temperatureInfo.iconCode)
                             }
                             .padding()
                         }
@@ -105,6 +102,12 @@ struct ContentView: View {
                
             }
         }
+        .onAppear(perform: {
+//            currentListVM.location =
+//            
+//            currentListVM.getWeatherCurrent()
+//            forecastListVM.getWeatherForecast()
+        })
     }
 }
 

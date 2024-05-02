@@ -18,7 +18,7 @@ public class ForecastAPIService {
     func getJSON(urlString: String,
                  dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                  keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                 completion: @escaping (Result<Forecast, APIError>) -> Void) {
+                 completion: @escaping (Result<Forecast, APIError>) -> Void) {  // Result<성공, 실패>
         guard let url = URL(string: urlString) else {
             completion(.failure(.error("Error: Invalid URL")))
             return
@@ -36,13 +36,13 @@ public class ForecastAPIService {
             }
             
             let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = dateDecodingStrategy
-            decoder.keyDecodingStrategy = keyDecodingStrategy
+            decoder.dateDecodingStrategy = dateDecodingStrategy  // 날짜 디코딩 방법
+            decoder.keyDecodingStrategy = keyDecodingStrategy   // ket 디코딩 방법
             
             do {
-                let decodedData = try decoder.decode(Forecast.self, from: data)
-                completion(.success(decodedData))
-            } catch let decodingError {
+                let decodedData = try decoder.decode(Forecast.self, from: data) // JSON 데이터를 디코딩 하여 Forecast 모델로 변환
+                completion(.success(decodedData))                               // 디코딩된 데이터를 completion zmffhwjdml .success 케이스로 전달하여 완료됨을 알림
+            } catch let decodingError {                                         // 실패 시
                 completion(.failure(APIError.error("Error: \(decodingError.localizedDescription)")))
                 return
             }
@@ -58,11 +58,11 @@ public class CurrentAPIService {
         case error(_ errorString: String)
     }
 
-//    @available(iOS 8.0, *)
-    public func getJSON<T: Decodable>(urlString: String,
+
+    func getJSON(urlString: String,
                  dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                  keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                 completion: @escaping (Result<T, APIError>) -> Void) {
+                 completion: @escaping (Result<Current, APIError>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.error("Error: Invalid URL")))
             return
@@ -84,7 +84,7 @@ public class CurrentAPIService {
             decoder.keyDecodingStrategy = keyDecodingStrategy
 
             do {
-                let decodedData = try decoder.decode(T.self, from: data)
+                let decodedData = try decoder.decode(Current.self, from: data)
                 completion(.success(decodedData))
             } catch let decodingError {
                 completion(.failure(APIError.error("Error: \(decodingError.localizedDescription)")))
