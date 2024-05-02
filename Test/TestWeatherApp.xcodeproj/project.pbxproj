@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		18047D962BE21A8B00BD3D77 /* ForecastStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047D952BE21A8B00BD3D77 /* ForecastStruct.swift */; };
 		18047D982BE2202100BD3D77 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047D972BE2202100BD3D77 /* APIService.swift */; };
+		18047D9D2BE31F8B00BD3D77 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 18047D9C2BE31F8B00BD3D77 /* SDWebImageSwiftUI */; };
+		18047D9F2BE3200800BD3D77 /* ForecastListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047D9E2BE3200800BD3D77 /* ForecastListViewModel.swift */; };
+		18047DA12BE321A000BD3D77 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DA02BE321A000BD3D77 /* ForecastViewModel.swift */; };
 		184357A12BE0CA1500C0D3E3 /* TestWeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184357A02BE0CA1500C0D3E3 /* TestWeatherAppApp.swift */; };
 		184357A32BE0CA1500C0D3E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184357A22BE0CA1500C0D3E3 /* ContentView.swift */; };
 		184357A52BE0CA1600C0D3E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 184357A42BE0CA1600C0D3E3 /* Assets.xcassets */; };
@@ -18,6 +21,8 @@
 /* Begin PBXFileReference section */
 		18047D952BE21A8B00BD3D77 /* ForecastStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastStruct.swift; sourceTree = "<group>"; };
 		18047D972BE2202100BD3D77 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		18047D9E2BE3200800BD3D77 /* ForecastListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastListViewModel.swift; sourceTree = "<group>"; };
+		18047DA02BE321A000BD3D77 /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		1843579D2BE0CA1500C0D3E3 /* TestWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		184357A02BE0CA1500C0D3E3 /* TestWeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeatherAppApp.swift; sourceTree = "<group>"; };
 		184357A22BE0CA1500C0D3E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18047D9D2BE31F8B00BD3D77 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +64,8 @@
 				184357A02BE0CA1500C0D3E3 /* TestWeatherAppApp.swift */,
 				184357A22BE0CA1500C0D3E3 /* ContentView.swift */,
 				18047D952BE21A8B00BD3D77 /* ForecastStruct.swift */,
+				18047D9E2BE3200800BD3D77 /* ForecastListViewModel.swift */,
+				18047DA02BE321A000BD3D77 /* ForecastViewModel.swift */,
 				18047D972BE2202100BD3D77 /* APIService.swift */,
 				184357A42BE0CA1600C0D3E3 /* Assets.xcassets */,
 				184357A62BE0CA1600C0D3E3 /* Preview Content */,
@@ -89,6 +97,9 @@
 			dependencies = (
 			);
 			name = TestWeatherApp;
+			packageProductDependencies = (
+				18047D9C2BE31F8B00BD3D77 /* SDWebImageSwiftUI */,
+			);
 			productName = TestWeatherApp;
 			productReference = 1843579D2BE0CA1500C0D3E3 /* TestWeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -117,6 +128,9 @@
 				Base,
 			);
 			mainGroup = 184357942BE0CA1500C0D3E3;
+			packageReferences = (
+				18047D9B2BE31F8B00BD3D77 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 1843579E2BE0CA1500C0D3E3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,7 +160,9 @@
 				184357A32BE0CA1500C0D3E3 /* ContentView.swift in Sources */,
 				18047D962BE21A8B00BD3D77 /* ForecastStruct.swift in Sources */,
 				18047D982BE2202100BD3D77 /* APIService.swift in Sources */,
+				18047DA12BE321A000BD3D77 /* ForecastViewModel.swift in Sources */,
 				184357A12BE0CA1500C0D3E3 /* TestWeatherAppApp.swift in Sources */,
+				18047D9F2BE3200800BD3D77 /* ForecastListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		18047D9B2BE31F8B00BD3D77 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		18047D9C2BE31F8B00BD3D77 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18047D9B2BE31F8B00BD3D77 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 184357952BE0CA1500C0D3E3 /* Project object */;
 }

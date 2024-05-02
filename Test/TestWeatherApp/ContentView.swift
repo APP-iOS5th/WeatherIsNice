@@ -4,30 +4,24 @@
 //
 //  Created by wonyoul heo on 4/30/24.
 //
-import CoreLocation
-import SwiftUI
 
+import SwiftUI
+import SDWebImage
+import SDWebImageSwiftUI
 
 struct ContentView: View {
-    @State private var location: String = ""
-    @State private var forecast: Forecast? = nil
-    @State private var current: Current? = nil
-    let dateFormatter = DateFormatter()
-    let currentdateFormatter = DateFormatter()
-    init() {
-        dateFormatter.dateFormat = "MM, d HH"
-        currentdateFormatter.dateFormat = "MMM, d, HH:mm"
-    }
+    @StateObject private var forecastListVM = ForecastListViewModel()
+    @StateObject private var currentListVM = CurrentListViewModel()
     
     var body: some View {
         NavigationStack{
             VStack{
                 HStack{
-                    TextField("Enter Location", text: $location)
+                    TextField("Enter Location", text: $forecastListVM.location)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     Button {
-                        getWeatherForecast(for: location)
-                        getWeatherCurrent(for: location)
+                        forecastListVM.getWeatherForecast()
+                        currentListVM.getWeatherCurrent()
                         
                     } label: {
                         Image(systemName: "magnifyingglass.circle.fill")
@@ -35,106 +29,36 @@ struct ContentView: View {
                     }
                 }
                 VStack{
-                    if let current = current{
-                        Text("Temp: \(current.main.temp)")
-                        Text(current.weather[0].main)
-                        Text(current.weather[0].description)
-                        Text(currentdateFormatter.string(from: current.dt))
-                    }
+                    Text(currentListVM.current?.day ?? "")
+                    Text(currentListVM.current?.temp ?? "")
+                    Text(currentListVM.current?.main ?? "")
+                    WebImage(url: currentListVM.current?.weatherIconURL ?? nil)
+                    Text(currentListVM.current?.overview ?? "")
                 }
-                if let forecast = forecast {
-                    List(forecast.list, id: \.dt) { day in
+                List(forecastListVM.forecasts, id: \.day) { day in
                         VStack(alignment: .leading) {
-                            Text(dateFormatter.string(from: day.dt))
+                            Text(day.day)
                                 .fontWeight(.bold)
                             HStack(alignment: .top){
-                                Image(systemName: "hourglass")
-                                    .font(.title)
-                                    .frame(width: 50, height: 50)
-                                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.green))
+                                WebImage(url: day.weatherIconURL)
                                 VStack(alignment: .leading){
-                                    Text("Temp:\(day.main.temp, specifier: "%.1f")")
+                                    Text(day.overview)
                                     HStack{
-                                        Text("Temp_min: \(day.main.temp_min, specifier: "%.0f")")
-                                        Text("Temp_max: \(day.main.temp_max, specifier: "%.0f")")
+                                        Text(day.high)
+                                        Text(day.low)
                                     }
                                 }
                             }
                         }
                     }
                     .listStyle(PlainListStyle())
-                } else {
-                    Spacer()
-                }
                 
             }
             .padding(.horizontal)
             .navigationTitle("Mobile Weather")
         }
     }
-    func getWeatherForecast(for location: String) {
-        let apiService = APIService.shared
-        
-        CLGeocoder().geocodeAddressString(location) {(placemarks, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            if let lat = placemarks?.first?.location?.coordinate.latitude,
-                let lon = placemarks?.first?.location?.coordinate.longitude {
-                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) {
-                    (result: Result<Forecast,APIService.APIError>) in
-                    switch result {
-                    case .success(let forecast):
-                        self.forecast = forecast  // @State
-//                        for day in forecast.list {
-//                            print(dateFormatter.string(from: day.dt))
-//                            print("     Temp: ", day.main.temp)
-//                            print("     Temp_min: ", day.main.temp_min)
-//                            print("     Temp_max: ", day.main.temp_max)
-//                            print("     Description: ", day.weather[0].description)
-//                            print("     IconURL: ", day.weather[0].weatherIconURL)
-//                        }
-                        
-                    case .failure(let apiError):
-                        switch apiError {
-                        case .error(let errorString):
-                            print(errorString)
-                        }
-                    }
-                    
-                }
-
-            }
-        }
-    }
-    func getWeatherCurrent(for location: String) {
-        let apiService = CurrentAPIService.shared
-        CLGeocoder().geocodeAddressString("Seoul") { (placemarks, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            if let lat = placemarks?.first?.location?.coordinate.latitude,
-               let lon = placemarks?.first?.location?.coordinate.longitude {
-                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) { (result: Result<Current, CurrentAPIService.APIError>) in
-                    switch result {
-                    case .success(let current):
-                        self.current = current
-//                        print(dateFormatter.string(from: current.dt))
-//                        print("     Temp: \(current.main.temp)")
-//                        print("     main: \(current.weather[0].main)")
-//                        print("     discription: \(current.weather[0].description)")
-//                        print("     Icon: \(current.weather[0].weatherIconURL)")
-                    case .failure(let apiError):
-                        switch apiError {
-                        case .error(let errorString):
-                            print(errorString)
-                        }
-                    }
-                    
-                }
-            }
-        }
-    }
+    
 }
 
 #Preview {

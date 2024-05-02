@@ -22,10 +22,6 @@ struct Forecast: Codable {
             let id: Int
             let description: String
             let icon: String
-            var weatherIconURL: URL {
-                let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
-                return URL(string: urlString)! // 굉장히 위험함
-            }
         }
         let weather: [Weather]
     }
@@ -39,6 +35,8 @@ struct Current: Codable {
     let dt: Date
     struct Main: Codable{
         let temp: Double
+        let temp_min: Double
+        let temp_max: Double
     }
     let main: Main
     struct Weather: Codable{
@@ -46,10 +44,6 @@ struct Current: Codable {
         let main: String
         let description:  String
         let icon: String
-        var weatherIconURL: URL {
-            let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
-            return URL(string: urlString)! // 굉장히 위험함
-        }
     }
     let weather: [Weather]
 }
