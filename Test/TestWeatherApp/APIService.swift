@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class APIService {
-    public static let shared = APIService()
+public class ForecastAPIService {
+    public static let shared = ForecastAPIService()
     
     public enum APIError: Error {
         case error(_ errorString: String)

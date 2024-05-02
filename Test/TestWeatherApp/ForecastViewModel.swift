@@ -29,6 +29,12 @@ struct ForecastViewModel {
         return numberFormatter
     }
     
+    private static var hourFormatter: DateFormatter {
+            let hourFormatter = DateFormatter()
+            hourFormatter.dateFormat = "HH"
+            return hourFormatter
+        }
+    
     var day: String {
         return Self.dateFormatter.string(from: forecast.dt)
     }
@@ -37,6 +43,9 @@ struct ForecastViewModel {
         return Self.shortdateFormatter.string(from: forecast.dt)
     }
     
+    var hour: String {
+            return Self.hourFormatter.string(from: forecast.dt)
+        }
     
     
     var overview: String {
@@ -70,7 +79,7 @@ struct CurrentViewModel {
     
     private static var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM, d, HH:mm"
+        dateFormatter.dateFormat = "HH:mm"
         return dateFormatter
     }
     
@@ -80,7 +89,7 @@ struct CurrentViewModel {
         return numberFormatter
     }
     var temp: String {
-        return "현재온도: \(Self.numberFormatter.string(for: current.main.temp) ?? "0")ºC"
+        return "\(Self.numberFormatter.string(for: current.main.temp) ?? "0")ºC"
     }
     
     var day: String {

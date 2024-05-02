@@ -20,10 +20,10 @@ class ForecastListViewModel: ObservableObject {
     @Published var forecasts: [ForecastViewModel] = []
     @Published var temperatureInfoPerDay: [TemperatureInfo] = []
     
-    var location: String = ""
+    var location: String = "Seoul"
     
     func getWeatherForecast() {
-        let apiService = APIService.shared
+        let apiService = ForecastAPIService.shared
         
         CLGeocoder().geocodeAddressString(location) {(placemarks, error) in
             if let error = error {
@@ -32,7 +32,7 @@ class ForecastListViewModel: ObservableObject {
             if let lat = placemarks?.first?.location?.coordinate.latitude,
                let lon = placemarks?.first?.location?.coordinate.longitude {
                 apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) {
-                    (result: Result<Forecast,APIService.APIError>) in
+                    (result: Result<Forecast,ForecastAPIService.APIError>) in
                     switch result {
                     case .success(let forecast):
                         DispatchQueue.main.async { [self] in
@@ -51,31 +51,6 @@ class ForecastListViewModel: ObservableObject {
             }
         }
     }
-    //    private func calculateMinTemperatures() {
-    //        self.minTemperaturesPerDay = [:] // 초기화
-    //        for forecast in forecasts {
-    //            let date = String(forecast.shortday) // MM.dd
-    //            let minTemp = forecast.forecast.main.temp_min
-    //            if let existingMin = minTemperaturesPerDay[date] {
-    //                minTemperaturesPerDay[date] = min(existingMin, minTemp)
-    //            } else {
-    //                minTemperaturesPerDay[date] = minTemp
-    //            }
-    //        }
-    //    }
-    //
-    //    private func calculateMaxTemperatures() {
-    //        self.maxTemperaturesPerDay = [:] // 초기화
-    //        for forecast in forecasts {
-    //            let date = String(forecast.shortday) // MM.dd
-    //            let maxTemp = forecast.forecast.main.temp_max
-    //            if let existingMax = maxTemperaturesPerDay[date] {
-    //                minTemperaturesPerDay[date] = min(existingMax, maxTemp)
-    //            } else {
-    //                minTemperaturesPerDay[date] = maxTemp
-    //            }
-    //        }
-    //    }
     
     private func calculateTemperatureInfoPerDay(from forecasts: [ForecastViewModel]) -> [TemperatureInfo] {
         var temperatureInfoPerDay: [TemperatureInfo] = []

@@ -55,7 +55,7 @@ struct ContentView: View {
                     Divider()
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
-                            ForEach(forecastListVM.forecasts, id: \.day) { day in
+                            ForEach(forecastListVM.forecasts, id: \.) { day in
                                 VStack {
                                     Text("\(String(describing: day.hour))")
                                     AsyncImage(url: day.weatherIconURL) { image in
