@@ -27,7 +27,7 @@ struct ContentView: View {
                             .font(.title3)
                     }
                 }
-                .padding(.vertical, 10)
+                .padding()
                 VStack{
                     Text("나의 위치")
                         .font(.title)
@@ -48,14 +48,15 @@ struct ContentView: View {
                         Text(currentListVM.current?.high ?? "")
                     }
                 }
-                VStack{
-                    Text("Three-Hour Forecast")
-                        .padding(.top)
-                        .fontWeight(.bold)
+                VStack(alignment: .leading){
+                    HStack{
+                        Image(systemName: "clock")
+                        Text("시간별 일기예보")
+                    }
                     Divider()
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
-                            ForEach(forecastListVM.forecasts, id: \.) { day in
+                            ForEach(forecastListVM.forecasts, id: \.day) { day in
                                 VStack {
                                     Text("\(String(describing: day.hour))")
                                     AsyncImage(url: day.weatherIconURL) { image in
@@ -73,9 +74,35 @@ struct ContentView: View {
                             
                         }
                     }
+                    Divider()
                 }
-                .padding()
-               Spacer()
+                .padding([.top,.leading,.trailing])
+                VStack(alignment: .leading)
+                {
+                    HStack{
+                        Image(systemName: "calendar")
+                        Text("5일간의 일기예보")
+                    }
+                    Divider()
+                    ScrollView(.vertical, showsIndicators:  false) {
+                        ForEach(forecastListVM.temperatureInfoPerDay, id: \.date) { temperatureInfo in
+                            HStack{
+                                VStack(alignment: .leading) {
+                                    Text(temperatureInfo.date)
+                                        .font(.headline)
+                                    Text("Min Temp: \(String(format: "%.0f", temperatureInfo.minTemp))°C")
+                                    Text("Max Temp: \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
+                                }
+                                Spacer()
+                                Image(systemName: "cloud.fill")
+                                    .padding()
+                            }
+                            .padding()
+                        }
+                    }
+                }
+                .padding([.top,.leading,.trailing])
+               
             }
         }
     }
@@ -84,3 +111,22 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+
+/*
+ 1. 필터링
+ 값 대략 8~9개 받아오기. -> 서경님 부탁해요.
+ 
+ 2. 현재 위치 받아오기
+ -> 원열님 부탁해요.
+ 
+ 3. 비동기 작업
+ -> 조장님께 전체적인 코드 흐름 부탁해요.
+ 
+ 4. UI 꾸미기
+ 
+ 5. 클라우드 대신 들어갈 방법 생각 해보겠습니다.
+ 
+ 6.
+ 
+ */

@@ -18,7 +18,7 @@ struct ForecastViewModel {
     
     private static var shortdateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM. dd : E"
+        dateFormatter.dateFormat = "MM.dd (E)"
         return dateFormatter
     }
     
@@ -47,6 +47,9 @@ struct ForecastViewModel {
             return Self.hourFormatter.string(from: forecast.dt)
         }
     
+    var temp: Int {
+            return Int(forecast.main.temp.rounded())
+        }
     
     var overview: String {
         forecast.weather[0].description.capitalized
