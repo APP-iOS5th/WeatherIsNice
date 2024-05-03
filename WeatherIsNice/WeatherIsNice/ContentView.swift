@@ -37,11 +37,11 @@ struct ContentView: View {
                     
                     Text(currentListVM.current?.temp ?? "")
                         .font(.system(size: 70))
-
+                    
                     Text(currentListVM.current?.overview ?? "")
                     HStack{
-                        Text(currentListVM.current?.low ?? "")
-                        Text(currentListVM.current?.high ?? "")
+                        Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최고:%.0f°", $0.maxTemp) } ?? "")
+                        Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최저:%.0f°", $0.minTemp) } ?? "")
                     }
                 }
                 VStack(alignment: .leading){
