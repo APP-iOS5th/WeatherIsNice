@@ -58,6 +58,7 @@ public final class InitWeatherService: NSObject, CLLocationManagerDelegate, Obse
             
             if let city = placemark.locality {
                 self.currentCity = city
+                print(city)
             } else {
                 print("City not found.")
             }

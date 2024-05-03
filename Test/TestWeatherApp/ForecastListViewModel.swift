@@ -8,33 +8,16 @@
 import Foundation
 import CoreLocation
 
+
+
+
+
 struct TemperatureInfo {
     let date: String
     let minTemp: Double
     let maxTemp: Double
     let iconCode: String
 }
-
-public final class LocationService: NSObject {
-    private let locationManager = CLLocationManager()
-    var currentLat: Double = 0
-    var currentLon: Double = 0
-    
-    public func loadLocation() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-    
-    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let location = locations.last else { return }
-            currentLat = location.coordinate.latitude
-            currentLon = location.coordinate.longitude
-        }
-    
-    
-}
-
-
 
 class ForecastListViewModel: ObservableObject {
     
@@ -51,8 +34,8 @@ class ForecastListViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
             if let lat = placemarks?.first?.location?.coordinate.latitude,
-               let lon = placemarks?.first?.location?.coordinate.longitude {  // getJSON : 비동기적으로 데이터를 가져온다.
-                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) {
+               let lon = placemarks?.first?.location?.coordinate.longitude {  // getJSON : 비동기적으로 데이터를 가져온다. // async 로 쓰는 코드로 바꾸세요.
+                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&lang=kr&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) {
                     (result: Result<Forecast,ForecastAPIService.APIError>) in
                     switch result {
                     case .success(let forecast):
@@ -66,9 +49,7 @@ class ForecastListViewModel: ObservableObject {
                             print(errorString)
                         }
                     }
-                    
                 }
-                
             }
         }
     }
@@ -138,7 +119,7 @@ class CurrentListViewModel: ObservableObject{
             }
             if let lat = placemarks?.first?.location?.coordinate.latitude,
                let lon = placemarks?.first?.location?.coordinate.longitude {
-                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) { (result: Result<Current, CurrentAPIService.APIError>) in
+                apiService.getJSON(urlString: "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&lang=kr&appid=ce878d5130eaace7c56141ff9190f16f&units=metric", dateDecodingStrategy: .secondsSince1970) { (result: Result<Current, CurrentAPIService.APIError>) in
                     switch result {
                     case .success(let current):
                         DispatchQueue.main.async{

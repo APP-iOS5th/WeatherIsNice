@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ForecastViewModel {
     let forecast: Forecast.List
@@ -31,7 +32,7 @@ struct ForecastViewModel {
     
     private static var hourFormatter: DateFormatter {
             let hourFormatter = DateFormatter()
-            hourFormatter.dateFormat = "HH"
+            hourFormatter.dateFormat = "H시"
             return hourFormatter
         }
     
@@ -76,6 +77,66 @@ struct ForecastViewModel {
         forecast.weather[0].icon
     }
     
+    var weatherIcon: String {
+            switch forecast.weather[0].icon {
+            case "01d":
+                return "sun.max.fill"
+            case "01n":
+                return "moon.stars.fill"
+            case "02d":
+                return "cloud.sun.fill"
+            case "02n":
+                return "cloud.moon.fill"
+            case "03d":
+                return "cloud"
+            case "03n":
+                return "cloud.fill"
+            case "04d":
+                return "smoke"
+            case "04n":
+                return "smoke.fill"
+            case "09d", "09n":
+                return "cloud.heavyrain.fill"
+            case "10d":
+                return "cloud.sun.rain.fill"
+            case "10n":
+                return "cloud.moon.rain.fill"
+            case "11d", "11n":
+                return "cloud.bolt.fill"
+            case "13d", "13n":
+                return "snow.fill"
+            case "50d", "50n":
+                return "cloud.fog.fill"
+            default:
+                return "questionmark.square"
+            }
+        }
+        
+        var iconColor: (Color, Color?) {
+            switch forecast.weather[0].icon {
+            case "01d":
+                return (.yellow, nil)
+            case "02d":
+                return (.black, .yellow)
+            case "09d", "09n":
+                return (.black, .blue)
+            case "10d":
+                return (.black, .yellow)
+            case "11d", "11n":
+                return (.black, .yellow)
+            default:
+                return (.black, nil)
+            }
+        }
+
+        
+        func isWithin24Hours() -> Bool {
+            let calendar = Calendar.current
+            if let tomorrow = calendar.date(byAdding: .hour, value: 24, to: Date()) {
+                return self.forecast.dt < tomorrow
+            }
+            return false
+        }
     
     
 }

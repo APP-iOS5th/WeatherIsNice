@@ -35,15 +35,8 @@ struct ContentView: View {
                     
                     Text(currentListVM.current?.temp ?? "")
                         .font(.system(size: 70))
-                    VStack{
-//                        AsyncImage(url: currentListVM.current?.weatherIconURL) {image in
-//                            image.resizable()
-//                                .frame(width: 100, height: 100)
-//                        } placeholder: {
-//                            ProgressView()
-//                        }
-                        Text(currentListVM.current?.main ?? "")
-                    }
+
+                    Text(currentListVM.current?.overview ?? "")
                     HStack{
                         Text(currentListVM.current?.low ?? "")
                         Text(currentListVM.current?.high ?? "")
@@ -56,23 +49,21 @@ struct ContentView: View {
                     }
                     Divider()
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
-                            ForEach(forecastListVM.forecasts, id: \.day) { day in
+                        HStack(spacing: 30) {
+                            ForEach(forecastListVM.forecasts.filter { $0.isWithin24Hours() }, id: \.day) { day in
                                 VStack {
                                     Text("\(String(describing: day.hour))")
-                                    AsyncImage(url: day.weatherIconURL) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 30, height: 30)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
+                                    
+                                    Image(systemName: day.weatherIcon)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 30, height: 30)
+                                        .padding(.vertical, 10)
+                                        .foregroundStyle(day.iconColor.0, day.iconColor.1 ?? .black)
                                     Text("\(day.temp)°")
                                         .font(.title3)
                                 }
                             }
-                            
                         }
                     }
                     Divider()
