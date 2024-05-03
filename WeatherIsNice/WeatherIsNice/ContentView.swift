@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var forecastListVM = ForecastListViewModel()
     @StateObject private var currentListVM = CurrentListViewModel()
+    @StateObject private var weatherService = InitWeatherService()
+        @State private var currentCity: String = ""
     
     var body: some View {
         NavigationStack{
@@ -30,6 +32,7 @@ struct ContentView: View {
                     Text("나의 위치")
                         .font(.title)
                     Text(currentListVM.location)
+                    
                     Text(currentListVM.current?.temp ?? "")
                         .font(.system(size: 70))
                     VStack{
@@ -102,12 +105,15 @@ struct ContentView: View {
                
             }
         }
-        .onAppear(perform: {
-//            currentListVM.location =
-//            
-//            currentListVM.getWeatherCurrent()
-//            forecastListVM.getWeatherForecast()
-        })
+        .onAppear{
+            weatherService.loadLocation {
+                forecastListVM.location = weatherService.currentCity
+                currentListVM.location = weatherService.currentCity
+                forecastListVM.getWeatherForecast()
+                currentListVM.getWeatherCurrent()
+            }
+            
+        }
     }
 }
 
