@@ -16,6 +16,7 @@
 		1821F9A42BE4A255003303D3 /* ForecastListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */; };
 		1821F9A52BE4A255003303D3 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */; };
 		1821F9A72BE4A28C003303D3 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A62BE4A28C003303D3 /* APIService.swift */; };
+		1821F9A92BE4C34B003303D3 /* TextFieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A82BE4C34B003303D3 /* TextFieldOption.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastListViewModel.swift; sourceTree = "<group>"; };
 		1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		1821F9A62BE4A28C003303D3 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		1821F9A82BE4C34B003303D3 /* TextFieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldOption.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +65,12 @@
 			children = (
 				18047DAE2BE36D5700BD3D77 /* WeatherIsNiceApp.swift */,
 				18047DB02BE36D5700BD3D77 /* ContentView.swift */,
+				1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */,
 				1821F99E2BE3EAD1003303D3 /* InitWeatherService.swift */,
 				1821F9A62BE4A28C003303D3 /* APIService.swift */,
 				1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */,
 				1821F9A02BE4A255003303D3 /* ForecastStruct.swift */,
-				1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */,
+				1821F9A82BE4C34B003303D3 /* TextFieldOption.swift */,
 				18047DB22BE36D5800BD3D77 /* Assets.xcassets */,
 				18047DB42BE36D5800BD3D77 /* Preview Content */,
 			);
@@ -154,6 +157,7 @@
 			files = (
 				18047DB12BE36D5700BD3D77 /* ContentView.swift in Sources */,
 				1821F99F2BE3EAD1003303D3 /* InitWeatherService.swift in Sources */,
+				1821F9A92BE4C34B003303D3 /* TextFieldOption.swift in Sources */,
 				1821F9A32BE4A255003303D3 /* ForecastStruct.swift in Sources */,
 				1821F9A72BE4A28C003303D3 /* APIService.swift in Sources */,
 				18047DAF2BE36D5700BD3D77 /* WeatherIsNiceApp.swift in Sources */,
