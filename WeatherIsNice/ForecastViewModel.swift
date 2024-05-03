@@ -88,13 +88,9 @@ struct ForecastViewModel {
                 return "cloud.sun.fill"
             case "02n":
                 return "cloud.moon.fill"
-            case "03d":
-                return "cloud"
-            case "03n":
+            case "03d", "03n":
                 return "cloud.fill"
-            case "04d":
-                return "smoke"
-            case "04n":
+            case "04d", "04n":
                 return "smoke.fill"
             case "09d", "09n":
                 return "cloud.heavyrain.fill"
@@ -196,6 +192,7 @@ struct IconView: View {
     var body: some View {
         let image: Image
         switch iconCode {
+<<<<<<< HEAD
         case "01d", "01n":
             image = Image(systemName: "sun.max.fill")
         case "02d", "02n":
@@ -204,6 +201,20 @@ struct IconView: View {
             image = Image(systemName: "cloud.fill")
         case "04d", "04n":
             image = Image(systemName: "smoke")
+=======
+        case "01d":
+            return Image(systemName: "sun.max.fill")
+        case "01n":
+            return Image(systemName: "moon.stars.fill")
+        case "02d":
+            return Image(systemName: "cloud.sun.fill")
+        case "02n":
+            return Image(systemName: "cloud.moon.fill")
+        case "03d", "03n":
+            return Image(systemName: "cloud.fill")
+        case "04d", "04n":
+            return Image(systemName: "smoke.fill")
+>>>>>>> fdfe327 (fill 수정)
         case "09d", "09n":
             image = Image(systemName: "cloud.heavyrain.fill")
         case "10d", "10n":
