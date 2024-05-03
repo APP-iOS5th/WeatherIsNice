@@ -11,91 +11,115 @@ struct ContentView: View {
     @StateObject private var forecastListVM = ForecastListViewModel()
     @ObservedObject private var currentListVM = CurrentListViewModel()
     @StateObject private var weatherService = InitWeatherService()
-        @State private var currentCity: String = ""
+    @ObservedObject private var keyboardObserver = KeyboardHeightObserver()
+    @State private var currentCity: String = ""
     
     var body: some View {
         NavigationStack{
-            VStack{
-                HStack{
-                    TextField("Enter Location", text: $currentCity)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    Button {
-                        forecastListVM.location = currentCity
-                        currentListVM.location = currentCity
-                        forecastListVM.getWeatherForecast()
-                        currentListVM.getWeatherCurrent()
-                    } label: {
-                        Image(systemName: "magnifyingglass.circle.fill")
-                            .font(.title3)
-                    }
-                }
-                .padding()
+            GeometryReader { geometry in
+
                 VStack{
-                    Text("나의 위치")
-                        .font(.title)
-                    Text(currentListVM.location)
-                    
-                    Text(currentListVM.current?.temp ?? "")
-                        .font(.system(size: 70))
-                    
-                    Text(currentListVM.current?.overview ?? "")
                     HStack{
-                        Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최고:%.0f°", $0.maxTemp) } ?? "")
-                        Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최저:%.0f°", $0.minTemp) } ?? "")
-                    }
-                }
-                VStack(alignment: .leading){
-                    HStack{
-                        Image(systemName: "clock")
-                        Text("시간별 일기예보")
-                    }
-                    Divider()
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 30) {
-                            ForEach(forecastListVM.forecasts.filter { $0.isWithin24Hours() }, id: \.day) { day in
-                                VStack {
-                                    Text("\(String(describing: day.hour))")
-                                    
-                                    Image(systemName: day.weatherIcon)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 30, height: 30)
-                                        .padding(.vertical, 10)
-                                        .foregroundStyle(day.iconColor.0, day.iconColor.1 ?? .black)
-                                    Text("\(day.temp)°")
-                                        .font(.title3)
-                                }
-                            }
+                        TextField("Enter Location", text: $currentCity)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        Button {
+                            forecastListVM.location = currentCity
+                            currentListVM.location = currentCity
+                            forecastListVM.getWeatherForecast()
+                            currentListVM.getWeatherCurrent()
+                        } label: {
+                            Image(systemName: "magnifyingglass.circle.fill")
+                                .font(.title3)
                         }
                     }
-                    Divider()
-                }
-                .padding([.top,.leading,.trailing])
-                VStack(alignment: .leading)
-                {
-                    HStack{
-                        Image(systemName: "calendar")
-                        Text("5일간의 일기예보")
-                    }
-                    Divider()
-                    ScrollView(.vertical, showsIndicators:  false) {
-                        ForEach(forecastListVM.temperatureInfoPerDay, id: \.date) { temperatureInfo in
-                            HStack{
-                                VStack(alignment: .leading) {
-                                    Text(temperatureInfo.date)
-                                        .font(.headline)
-                                    Text("최저 : \(String(format: "%.0f", temperatureInfo.minTemp))°C")
-                                    Text("최고 : \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
-                                }
-                                Spacer()
-                                IconView(iconCode: temperatureInfo.iconCode)
-                            }
-                            .padding()
+                    .padding()
+                    VStack{
+                        Text("나의 위치")
+                            .font(.title)
+                        Text(currentListVM.location)
+                        
+                        Text(currentListVM.current?.temp ?? "")
+                            .font(.system(size: 90))
+                        
+                        Text(currentListVM.current?.overview ?? "")
+                            .padding(.bottom, 3)
+                        HStack{
+                            Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최고:%.0f°", $0.maxTemp) } ?? "")
+                            Text(forecastListVM.temperatureInfoPerDay.first.map { String(format: "최저:%.0f°", $0.minTemp) } ?? "")
                         }
                     }
+                    ScrollView{
+                        VStack(spacing: 15){
+                            VStack(alignment: .leading){
+                                HStack{
+                                    Image(systemName: "clock")
+                                    Text("시간별 일기예보")
+                                }
+                                Divider()
+                                    .background(Color.black)
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 30) {
+                                        ForEach(forecastListVM.forecasts.filter { $0.isWithin24Hours() }, id: \.day) { day in
+                                            VStack {
+                                                Text("\(String(describing: day.hour))")
+                                                
+                                                Image(systemName: day.weatherIcon)
+                                                    .renderingMode(.original)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 30, height: 30)
+                                                    .padding(.vertical, 7)
+                                                    .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 2)
+                                                
+                                                Text("\(day.temp)°")
+                                                    .font(.title3)
+                                            }
+                                        }
+                                    }
+                                }
+                                Divider()
+                            }
+                            .padding([.top,.leading,.trailing])
+                            .background(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(Color("JWColor").opacity(0.3)))
+                            
+                            VStack(alignment: .leading)
+                            {
+                                HStack{
+                                    Image(systemName: "calendar")
+                                    Text("5일간의 일기예보")
+                                }
+                                Divider()
+                                    .background(Color.black)
+                                ScrollView(.vertical, showsIndicators:  false) {
+                                    ForEach(forecastListVM.temperatureInfoPerDay, id: \.date) { temperatureInfo in
+                                        HStack{
+                                            VStack(alignment: .leading) {
+                                                Text(temperatureInfo.date)
+                                                    .font(.headline)
+                                                Text("최저 : \(String(format: "%.0f", temperatureInfo.minTemp))°C")
+                                                Text("최고 : \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
+                                            }
+                                            Spacer()
+                                            IconView(iconCode: temperatureInfo.iconCode, size: 50)
+                                            
+                                        }
+                                        .padding()
+                                        Divider()
+                                            
+                                    }
+                                }
+                            }
+                            .padding([.top,.leading,.trailing])
+                            .background(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(Color("JWColor").opacity(0.3)))
+                            
+                        }
+                        .padding([.top,.leading,.trailing])
+                    }
                 }
-                .padding([.top,.leading,.trailing])
-               
             }
         }
         .onAppear{

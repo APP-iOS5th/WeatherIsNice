@@ -113,26 +113,27 @@ struct ForecastViewModel {
             }
         }
         
-        var iconColor: (Color, Color?) {
-            switch forecast.weather[0].icon {
-            case "01d":
-                return (.yellow, nil)
-            case "02d":
-                return (.black, .yellow)
-            case "09d", "09n":
-                return (.black, .blue)
-            case "10d":
-                return (.black, .yellow)
-            case "11d", "11n":
-                return (.black, .yellow)
-            default:
-                return (.black, nil)
-            }
-        }
-
-        
-        func isWithin24Hours() -> Bool {
-            let calendar = Calendar.current
+//    var iconColor: (Color, Color?, Color?) {
+//        
+//        switch forecast.weather[0].icon {
+//        case "01d":
+//            return (.yellow, nil, nil)
+//        case "02d":
+//            return (.black , .yellow, nil)
+//        case "09d", "09n":
+//            return (.black, .blue, nil)
+//        case "10d":
+//            return (.black, .yellow, .blue)
+//        case "11d", "11n":
+//            return (.black, .yellow, nil)
+//        default:
+//            return (Color("NightColor"), nil, nil)
+//        }
+//    }
+    
+    
+    func isWithin24Hours() -> Bool {
+        let calendar = Calendar.current
             if let tomorrow = calendar.date(byAdding: .hour, value: 24, to: Date()) {
                 return self.forecast.dt < tomorrow
             }
@@ -158,7 +159,7 @@ struct CurrentViewModel {
         return numberFormatter
     }
     var temp: String {
-        return "\(Self.numberFormatter.string(for: current.main.temp) ?? "0")ºC"
+        return "\(Self.numberFormatter.string(for: current.main.temp) ?? "0")º"
     }
     
     var day: String {
@@ -174,11 +175,11 @@ struct CurrentViewModel {
     }
     
     var high: String {
-        return "최고: \(Self.numberFormatter.string(for: current.main.temp_max) ?? "0")ºC"
+        return "최고: \(Self.numberFormatter.string(for: current.main.temp_max) ?? "0")º"
     }
     
     var low: String {
-        return "최저: \(Self.numberFormatter.string(for: current.main.temp_min) ?? "0")ºC"
+        return "최저: \(Self.numberFormatter.string(for: current.main.temp_min) ?? "0")º"
     }
     
     var weatherIconURL: URL {
@@ -190,39 +191,39 @@ struct CurrentViewModel {
 
 struct IconView: View {
     var iconCode: String
+    var size: CGFloat
 
     var body: some View {
+        let image: Image
         switch iconCode {
-        case "01d":
-            return Image(systemName: "sun.max.fill")
-        case "01n":
-            return Image(systemName: "moon.stars.fill")
-        case "02d":
-            return Image(systemName: "cloud.sun.fill")
-        case "02n":
-            return Image(systemName: "cloud.moon.fill")
-        case "03d":
-            return Image(systemName: "cloud")
-        case "03n":
-            return Image(systemName: "cloud.fill")
-        case "04d":
-            return Image(systemName: "smoke")
-        case "04n":
-            return Image(systemName: "smoke.fill")
+        case "01d", "01n":
+            image = Image(systemName: "sun.max.fill")
+        case "02d", "02n":
+            image = Image(systemName: "cloud.sun.fill")
+        case "03d", "03n":
+            image = Image(systemName: "cloud.fill")
+        case "04d", "04n":
+            image = Image(systemName: "smoke")
         case "09d", "09n":
-            return Image(systemName: "cloud.heavyrain.fill")
-        case "10d":
-            return Image(systemName: "cloud.sun.rain.fill")
-        case "10n":
-            return Image(systemName: "cloud.moon.rain.fill")
+            image = Image(systemName: "cloud.heavyrain.fill")
+        case "10d", "10n":
+            image = Image(systemName: "cloud.sun.rain.fill")
         case "11d", "11n":
-            return Image(systemName: "cloud.bolt.fill")
+            image = Image(systemName: "cloud.bolt.fill")
         case "13d", "13n":
-            return Image(systemName: "snow.fill")
+            image = Image(systemName: "snow.fill")
         case "50d", "50n":
-            return Image(systemName: "cloud.fog.fill")
+            image = Image(systemName: "cloud.fog.fill")
         default:
-            return Image(systemName: "questionmark.square")
+            image = Image(systemName: "questionmark.square")
         }
+
+        return image
+            .renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: size, height: size)
+            .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 2)
+
     }
 }
