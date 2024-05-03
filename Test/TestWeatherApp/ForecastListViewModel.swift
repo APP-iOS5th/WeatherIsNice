@@ -24,7 +24,7 @@ class ForecastListViewModel: ObservableObject {
     @Published var forecasts: [ForecastViewModel] = []
     @Published var temperatureInfoPerDay: [TemperatureInfo] = []
     
-    var location: String = "Seoul"
+    var location: String = ""
     
     func getWeatherForecast() {
         let apiService = ForecastAPIService.shared
@@ -113,7 +113,7 @@ class CurrentListViewModel: ObservableObject{
     
     func getWeatherCurrent() {
         let apiService = CurrentAPIService.shared
-        CLGeocoder().geocodeAddressString("Seoul") { (placemarks, error) in
+        CLGeocoder().geocodeAddressString(location) { (placemarks, error) in
             if let error = error {
                 print(error.localizedDescription)
             }

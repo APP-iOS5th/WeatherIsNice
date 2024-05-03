@@ -97,13 +97,13 @@ struct ContentView: View {
             }
         }
         .onAppear{
-            weatherService.loadLocation {
-                forecastListVM.location = weatherService.currentCity
-                currentListVM.location = weatherService.currentCity
-                forecastListVM.getWeatherForecast()
-                currentListVM.getWeatherCurrent()
-            }
-            
+            weatherService.loadLocation()
+        }
+        .onReceive(weatherService.$currentCity) { city in
+            forecastListVM.location = city
+            currentListVM.location = city
+            forecastListVM.getWeatherForecast()
+            currentListVM.getWeatherCurrent()
         }
     }
 }
