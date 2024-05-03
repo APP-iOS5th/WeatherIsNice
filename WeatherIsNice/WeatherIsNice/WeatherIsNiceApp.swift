@@ -1,14 +1,14 @@
 //
-//  WeatherApiApp.swift
-//  WeatherApi
+//  WeatherIsNiceApp.swift
+//  WeatherIsNice
 //
-//  Created by wonyoul heo on 4/30/24.
+//  Created by wonyoul heo on 5/2/24.
 //
 
 import SwiftUI
 
 @main
-struct WeatherApiApp: App {
+struct WeatherIsNiceApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
