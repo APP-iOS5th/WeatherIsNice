@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var forecastListVM = ForecastListViewModel()
-    @StateObject private var currentListVM = CurrentListViewModel()
+    @ObservedObject private var currentListVM = CurrentListViewModel()
     @StateObject private var weatherService = InitWeatherService()
         @State private var currentCity: String = ""
     
@@ -17,9 +17,11 @@ struct ContentView: View {
         NavigationStack{
             VStack{
                 HStack{
-                    TextField("Enter Location", text: $forecastListVM.location)
+                    TextField("Enter Location", text: $currentCity)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     Button {
+                        forecastListVM.location = currentCity
+                        currentListVM.location = currentCity
                         forecastListVM.getWeatherForecast()
                         currentListVM.getWeatherCurrent()
                     } label: {
