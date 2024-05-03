@@ -11,11 +11,11 @@
 		18047DB12BE36D5700BD3D77 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DB02BE36D5700BD3D77 /* ContentView.swift */; };
 		18047DB32BE36D5800BD3D77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18047DB22BE36D5800BD3D77 /* Assets.xcassets */; };
 		18047DB62BE36D5800BD3D77 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18047DB52BE36D5800BD3D77 /* Preview Assets.xcassets */; };
-		18047DBD2BE36D7300BD3D77 /* ForecastStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DBC2BE36D7300BD3D77 /* ForecastStruct.swift */; };
-		18047DBF2BE36E0E00BD3D77 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DBE2BE36E0D00BD3D77 /* APIService.swift */; };
-		18047DC12BE36E2700BD3D77 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DC02BE36E2700BD3D77 /* ForecastViewModel.swift */; };
-		18047DC32BE36E3800BD3D77 /* ForecastListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18047DC22BE36E3800BD3D77 /* ForecastListViewModel.swift */; };
 		1821F99F2BE3EAD1003303D3 /* InitWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F99E2BE3EAD1003303D3 /* InitWeatherService.swift */; };
+		1821F9A32BE4A255003303D3 /* ForecastStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A02BE4A255003303D3 /* ForecastStruct.swift */; };
+		1821F9A42BE4A255003303D3 /* ForecastListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */; };
+		1821F9A52BE4A255003303D3 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */; };
+		1821F9A72BE4A28C003303D3 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821F9A62BE4A28C003303D3 /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,11 +24,11 @@
 		18047DB02BE36D5700BD3D77 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		18047DB22BE36D5800BD3D77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18047DB52BE36D5800BD3D77 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		18047DBC2BE36D7300BD3D77 /* ForecastStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForecastStruct.swift; path = ../../Test/TestWeatherApp/ForecastStruct.swift; sourceTree = "<group>"; };
-		18047DBE2BE36E0D00BD3D77 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = ../../Test/TestWeatherApp/APIService.swift; sourceTree = "<group>"; };
-		18047DC02BE36E2700BD3D77 /* ForecastViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForecastViewModel.swift; path = ../../Test/TestWeatherApp/ForecastViewModel.swift; sourceTree = "<group>"; };
-		18047DC22BE36E3800BD3D77 /* ForecastListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForecastListViewModel.swift; path = ../../Test/TestWeatherApp/ForecastListViewModel.swift; sourceTree = "<group>"; };
 		1821F99E2BE3EAD1003303D3 /* InitWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitWeatherService.swift; sourceTree = "<group>"; };
+		1821F9A02BE4A255003303D3 /* ForecastStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastStruct.swift; sourceTree = "<group>"; };
+		1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastListViewModel.swift; sourceTree = "<group>"; };
+		1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
+		1821F9A62BE4A28C003303D3 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,10 +64,10 @@
 				18047DAE2BE36D5700BD3D77 /* WeatherIsNiceApp.swift */,
 				18047DB02BE36D5700BD3D77 /* ContentView.swift */,
 				1821F99E2BE3EAD1003303D3 /* InitWeatherService.swift */,
-				18047DC22BE36E3800BD3D77 /* ForecastListViewModel.swift */,
-				18047DC02BE36E2700BD3D77 /* ForecastViewModel.swift */,
-				18047DBE2BE36E0D00BD3D77 /* APIService.swift */,
-				18047DBC2BE36D7300BD3D77 /* ForecastStruct.swift */,
+				1821F9A62BE4A28C003303D3 /* APIService.swift */,
+				1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */,
+				1821F9A02BE4A255003303D3 /* ForecastStruct.swift */,
+				1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */,
 				18047DB22BE36D5800BD3D77 /* Assets.xcassets */,
 				18047DB42BE36D5800BD3D77 /* Preview Content */,
 			);
@@ -154,11 +154,11 @@
 			files = (
 				18047DB12BE36D5700BD3D77 /* ContentView.swift in Sources */,
 				1821F99F2BE3EAD1003303D3 /* InitWeatherService.swift in Sources */,
-				18047DBD2BE36D7300BD3D77 /* ForecastStruct.swift in Sources */,
-				18047DBF2BE36E0E00BD3D77 /* APIService.swift in Sources */,
+				1821F9A32BE4A255003303D3 /* ForecastStruct.swift in Sources */,
+				1821F9A72BE4A28C003303D3 /* APIService.swift in Sources */,
 				18047DAF2BE36D5700BD3D77 /* WeatherIsNiceApp.swift in Sources */,
-				18047DC12BE36E2700BD3D77 /* ForecastViewModel.swift in Sources */,
-				18047DC32BE36E3800BD3D77 /* ForecastListViewModel.swift in Sources */,
+				1821F9A42BE4A255003303D3 /* ForecastListViewModel.swift in Sources */,
+				1821F9A52BE4A255003303D3 /* ForecastViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -88,7 +88,7 @@ struct ContentView: View {
                                     Text("최고 : \(String(format: "%.0f", temperatureInfo.maxTemp))°C")
                                 }
                                 Spacer()
-                                Text(temperatureInfo.iconCode)
+                                IconView(iconCode: temperatureInfo.iconCode)
                             }
                             .padding()
                         }

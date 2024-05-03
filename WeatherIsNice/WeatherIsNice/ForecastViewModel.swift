@@ -20,6 +20,7 @@ struct ForecastViewModel {
     private static var shortdateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM.dd (E)"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter
     }
     
@@ -183,5 +184,45 @@ struct CurrentViewModel {
     var weatherIconURL: URL {
         let urlString = "https://openweathermap.org/img/wn/\(current.weather[0].icon)@2x.png"
         return URL(string: urlString)!
+    }
+}
+
+
+struct IconView: View {
+    var iconCode: String
+
+    var body: some View {
+        switch iconCode {
+        case "01d":
+            return Image(systemName: "sun.max.fill")
+        case "01n":
+            return Image(systemName: "moon.stars.fill")
+        case "02d":
+            return Image(systemName: "cloud.sun.fill")
+        case "02n":
+            return Image(systemName: "cloud.moon.fill")
+        case "03d":
+            return Image(systemName: "cloud")
+        case "03n":
+            return Image(systemName: "cloud.fill")
+        case "04d":
+            return Image(systemName: "smoke")
+        case "04n":
+            return Image(systemName: "smoke.fill")
+        case "09d", "09n":
+            return Image(systemName: "cloud.heavyrain.fill")
+        case "10d":
+            return Image(systemName: "cloud.sun.rain.fill")
+        case "10n":
+            return Image(systemName: "cloud.moon.rain.fill")
+        case "11d", "11n":
+            return Image(systemName: "cloud.bolt.fill")
+        case "13d", "13n":
+            return Image(systemName: "snow.fill")
+        case "50d", "50n":
+            return Image(systemName: "cloud.fog.fill")
+        default:
+            return Image(systemName: "questionmark.square")
+        }
     }
 }
