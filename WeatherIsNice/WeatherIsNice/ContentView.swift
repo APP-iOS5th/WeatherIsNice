@@ -11,7 +11,6 @@ struct ContentView: View {
     @StateObject private var forecastListVM = ForecastListViewModel()
     @ObservedObject private var currentListVM = CurrentListViewModel()
     @StateObject private var weatherService = InitWeatherService()
-    @ObservedObject private var keyboardObserver = KeyboardHeightObserver()
     @State private var currentCity: String = ""
     
     var body: some View {

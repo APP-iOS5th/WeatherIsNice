@@ -8,7 +8,7 @@
 import Foundation
 
 
-////https://api.openweathermap.org/data/2.5/forecast?lat=37.564214&lon=127.001699&appid=ce878d5130eaace7c56141ff9190f16f&units=metric
+////https://api.openweathermap.org/data/2.5/forecast?lat=37.566535&lon=126.9779692&appid=ce878d5130eaace7c56141f
 struct Forecast: Codable {
     struct List: Codable {
         let dt: Date
@@ -52,5 +52,29 @@ struct Current: Codable {
 
 
 
-//Test
-// 참고로 여기서는 print 안되니까 play ground에서 해보세요
+
+
+//Test 중첩되지 않은 코드
+
+//struct APIResponse {
+//    let name: String
+//    let main: APIMain
+//    let weather: [APIWeather]
+//}
+//
+//struct APIMain: Decodable {
+//    let temp: Double
+//}
+//
+//struct APIWeather: Decodable {
+//    let description: String
+//    let iconName: String
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case description
+//        case iconName = "main"
+//    }
+//}
+
+
+
