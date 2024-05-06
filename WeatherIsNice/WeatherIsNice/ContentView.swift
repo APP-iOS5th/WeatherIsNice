@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var forecastListVM = ForecastListViewModel()
-    @ObservedObject private var currentListVM = CurrentListViewModel()
+    @StateObject private var currentListVM = CurrentListViewModel()
     @StateObject private var weatherService = InitWeatherService()
     @State private var currentCity: String = ""
     

@@ -63,10 +63,10 @@
 			children = (
 				18047DAE2BE36D5700BD3D77 /* WeatherIsNiceApp.swift */,
 				18047DB02BE36D5700BD3D77 /* ContentView.swift */,
-				1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */,
 				1821F99E2BE3EAD1003303D3 /* InitWeatherService.swift */,
-				1821F9A62BE4A28C003303D3 /* APIService.swift */,
 				1821F9A12BE4A255003303D3 /* ForecastListViewModel.swift */,
+				1821F9A22BE4A255003303D3 /* ForecastViewModel.swift */,
+				1821F9A62BE4A28C003303D3 /* APIService.swift */,
 				1821F9A02BE4A255003303D3 /* ForecastStruct.swift */,
 				18047DB22BE36D5800BD3D77 /* Assets.xcassets */,
 				18047DB42BE36D5800BD3D77 /* Preview Content */,

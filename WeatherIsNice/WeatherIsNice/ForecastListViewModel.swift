@@ -10,8 +10,6 @@ import CoreLocation
 
 
 
-
-
 struct TemperatureInfo {
     let date: String
     let minTemp: Double
