@@ -89,11 +89,11 @@ struct ForecastViewModel {
             case "02n":
                 return "cloud.moon.fill"
             case "03d":
-                return "cloud"
+                return "cloud.fill"
             case "03n":
                 return "cloud.fill"
             case "04d":
-                return "smoke"
+                return "smoke.fill"
             case "04n":
                 return "smoke.fill"
             case "09d", "09n":
@@ -203,7 +203,7 @@ struct IconView: View {
         case "03d", "03n":
             image = Image(systemName: "cloud.fill")
         case "04d", "04n":
-            image = Image(systemName: "smoke")
+            image = Image(systemName: "smoke.fill")
         case "09d", "09n":
             image = Image(systemName: "cloud.heavyrain.fill")
         case "10d", "10n":

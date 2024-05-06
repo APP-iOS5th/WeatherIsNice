@@ -37,11 +37,11 @@ public class ForecastAPIService {
             
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = dateDecodingStrategy  // 날짜 디코딩 방법
-            decoder.keyDecodingStrategy = keyDecodingStrategy   // ket 디코딩 방법
+            decoder.keyDecodingStrategy = keyDecodingStrategy   // key 디코딩 방법
             
             do {
                 let decodedData = try decoder.decode(Forecast.self, from: data) // JSON 데이터를 디코딩 하여 Forecast 모델로 변환
-                completion(.success(decodedData))                               // 디코딩된 데이터를 completion zmffhwjdml .success 케이스로 전달하여 완료됨을 알림
+                completion(.success(decodedData))                               // 디코딩된 데이터를 completion 클로저의 .success 케이스로 전달하여 완료됨을 알림
             } catch let decodingError {                                         // 실패 시
                 completion(.failure(APIError.error("Error: \(decodingError.localizedDescription)")))
                 return
